@@ -13,6 +13,11 @@ class Solution {
             x /= 10;
         }
         
-        return originalNum == reversedNum;
+       if (originalNum == reversedNum) {
+       return true;
+       }
+    else {
+        return false;
+    }
     }
 }
