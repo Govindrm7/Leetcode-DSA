@@ -1,24 +1,33 @@
-
-
 class Solution {
     public boolean isValid(String s) {
-        Stack<Character> stack = new Stack<>();
-        HashMap<Character, Character> map = new HashMap<>();
-        map.put('{', '}');
-        map.put('[', ']');
-        map.put('(', ')');
-        
-        for (int i = 0; i < s.length(); i++) {
-            char current = s.charAt(i);
-            if (map.containsKey(current)) {
-                stack.push(current);
-            } else if (map.containsValue(current)) {
-                if (stack.isEmpty() || map.get(stack.pop()) != current) {
+        Stack<Character>st=new Stack<>();
+        for(int i=0;i<s.length();i++){
+            if(s.charAt(i)=='(' || s.charAt(i)=='{' || s.charAt(i)=='['){
+                st.push(s.charAt(i));
+            }
+            else{
+                if(st.isEmpty()){
+                    return false;
+                }
+                char c=st.peek();
+                st.pop();
+                if(c=='(' && s.charAt(i)==')'){
+                    continue;
+                }
+                else if(c=='{' && s.charAt(i)=='}'){
+                    continue;
+                }
+                else if(c=='[' && s.charAt(i)==']'){
+                    continue;
+                }
+                else{
                     return false;
                 }
             }
         }
-        
-        return stack.isEmpty();
+        if(st.isEmpty()){
+            return true;
+        }
+        return false;
     }
 }
