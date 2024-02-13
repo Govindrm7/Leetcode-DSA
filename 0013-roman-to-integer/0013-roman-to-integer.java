@@ -1,35 +1,25 @@
 class Solution {
     public int romanToInt(String s) {
-        int res=0;
-		// Let s = "IV" after traversing string res will be 6
-		// Let s= "IX" after traversing string res will be 11
-        for(int i=0;i<s.length();i++){
-            switch(s.charAt(i)){
-                case 'I': res=res+1;
-                    break;
-                case 'V': res=res+5;
-                    break;
-                case 'X': res+=10;
-                    break;
-                case 'L': res+=50;
-                    break;
-                case 'C': res+=100;
-                    break;
-                case 'D': res+=500;
-                    break;
-                case 'M': res+=1000;
-                    break;
-            }
-        }   
-		// Since s= "IV" it satisfies first condition hence subtract 2 from res. res=4
-		// Since s= "IX" it satisfies first condition and 2 is subtracted from res. res=9
-        if(s.contains("IV")||s.contains("IX"))
-            res=res-2;
-        if(s.contains("XL")||s.contains("XC"))
-            res=res-20;
-        if(s.contains("CD")||s.contains("CM"))
-            res=res-200;
-       
-        return res;
+        HashMap<Character,Integer> h = new HashMap<>();
+        h.put('I',1);
+        h.put('V',5);
+        h.put('X',10);
+        h.put('L',50);
+        h.put('C',100);
+        h.put('D',500);
+        h.put('M',1000);
+        int ans = 0;
+        int n = s.length();
+        char prev = s.charAt(n-1);
+        
+        for(int i=n;i>0;i--){
+            char curr = s.charAt(i-1);
+            if(h.get(curr)<h.get(prev))
+                ans-=h.get(curr);
+            else
+                ans+=h.get(curr);
+            prev = curr;
+        }
+        return ans;
     }
 }
